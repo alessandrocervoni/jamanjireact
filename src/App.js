@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { atom } from "jotai";
 import 'bootstrap/dist/css/bootstrap.css';
-// import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 // import Homepage from "./components/homepage/Homepage";
-import Registrazione from "./components/registrazione/Registrazione";
+import Registration from "./components/registration/Registration";
 import Login from "./components/login/Login";
 import { useAtom } from "jotai";
 
@@ -20,12 +20,12 @@ function App()
     <>  
       <BrowserRouter>
 
-        {/* <Navbar />  */}
+        <Navbar /> 
         <Routes>
           {/* <Route index element={<Homepage />} /> */}
-          <Route index element={<Registrazione />} />
-          <Route path="Login" element={<Login />} />
-          <Route path="Registrazione" element={<Registrazione />} />
+          <Route index element={<Registration />} />
+          <Route path="login" element={<Login />} />
+          <Route path="registration" element={<Registration />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 
-export default function Registrazione()
+export default function Registration()
 {
     const [user, setUser] = useAtom(currentUser);
     const [users, setUsers] = useState([]);
@@ -41,9 +41,17 @@ export default function Registrazione()
                         phone:"",
                         positionX:"",
                         positionY:""
-                    });})
-
-                navigate("/Login")
+                    });
+                if(response.data) 
+                {
+                    setUser(response.data);
+                    navigate('/login')
+                } 
+                else
+                {
+                    alert('Registrazione non riuscita, spiacente');
+                }
+                })
     }
 
     function synchronize(e)
@@ -94,7 +102,7 @@ export default function Registrazione()
 
                 {/* BUTTON REGISTRAZIONE */}
                 <div class="d-grid gap-2 col-3 mx-auto">
-                    <Link className="btn btn-primary" role="button" onClick={/*log &&*/ UploadUser}>Registration</Link>
+                    <Link className="btn btn-primary" role="button" onClick={/*log &&*/ UploadUser}>Register</Link>
                 </div>
 
             </form>

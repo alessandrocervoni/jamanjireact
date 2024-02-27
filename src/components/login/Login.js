@@ -2,7 +2,7 @@ import { currentUser } from "../../App";
 import { useRef  } from "react"
 import { atom, useAtom } from 'jotai';
 import axios from "axios";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Login()
@@ -24,12 +24,15 @@ export default function Login()
          
         axios.post("/user/login", requestBody)
             .then(response =>{
-                if(response.data) {
+                if(response.data) 
+                {
                     setUser(response.data);
 
-                    navigate('/')
-                } else{
-                    alert('Email e Password non validi.');
+                    navigate('/homepage')
+                } 
+                else
+                {
+                    alert('Email e/o Password non validi.');
                 }
 
             })
@@ -50,8 +53,11 @@ export default function Login()
                         <label for="password">Password:</label>
                         <input type="password" ref={pwIn} className="form-control" placeholder="Password" required />
                     </div>
-                    <div className="d-grid gap-2 col-3 mx-auto">
+                    <div className="d-grid gap-2 col-3 mx-auto mb-2">
                         <Link className="btn btn-primary btn-block " role="button" onClick={handleLogin}>Login</Link>
+                    </div>
+                    <div className="d-grid gap-2 col-3 mx-auto">
+                        <Link className="btn btn-primary btn-block " role="button" to="/registration">Register here</Link>
                     </div>
                     </form>
                 </div>
