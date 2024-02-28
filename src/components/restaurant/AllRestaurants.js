@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function AllRestaurants() 
 {
@@ -16,9 +17,15 @@ export default function AllRestaurants()
     }, []);
 
     function filter() {
+        // Verifica se entrambi i campi sono stati compilati
+        if (!searchFoodTypes.current.value || !searchDistance.current.value) {
+            alert('Tutti i campi devono essere compilati per effettuare il filtro.');
+            return;
+        }
+    
         const foodTypes = searchFoodTypes.current.value.trim().toLowerCase();
         const maxDistance = parseInt(searchDistance.current.value);
-
+    
         const filtered = restaurants.filter((restaurant) => {
             // Converti food_types in lowercase per confrontare in modo case-insensitive
             const restaurantFoodTypes = restaurant.foodTypes.map(foodType => foodType.toLowerCase());
@@ -28,7 +35,7 @@ export default function AllRestaurants()
             const withinDistance = restaurant.distance <= maxDistance || !maxDistance;
             return matchFoodTypes && withinDistance;
         });
-
+    
         setFilteredRestaurants(filtered);
     }
 
@@ -63,6 +70,8 @@ export default function AllRestaurants()
                                 <h5 className="card-title">{restaurant.name}</h5>
                                 <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
                                 <p className="card-text">Distance: {restaurant.distance}</p>
+                                {/* Aggiungi il pulsante per andare a RestaurantDetail.js */}
+                                <Link to="/restaurantDetail" className="btn btn-primary">Go to Restaurant Detail</Link>
                             </div>
                         </div>
                     </div>

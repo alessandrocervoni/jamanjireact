@@ -1,8 +1,8 @@
 import { currentUser } from "../../App";
 import { useAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Registration() 
