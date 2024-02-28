@@ -65,7 +65,7 @@ const AuthenticatedNavbar = ({ user, logout }) => {
                     </ul>
                     <div class="d-flex">
                         <div class="text-white me-5 fw-bold">
-                            Ciao {user.email}
+                            Ciao, {user.mail}
                         </div>
                         <div class="text-white me-5 fw-bold">
                             <Link class="text-white nav-link" onClick={logout}>Logout</Link>

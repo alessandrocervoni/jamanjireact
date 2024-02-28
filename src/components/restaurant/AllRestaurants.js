@@ -21,11 +21,11 @@ export default function AllRestaurants()
 
         const filtered = restaurants.filter((restaurant) => {
             // Converti food_types in lowercase per confrontare in modo case-insensitive
-            const restaurantFoodTypes = restaurant.food_types.map(foodType => foodType.toLowerCase());
+            const restaurantFoodTypes = restaurant.foodTypes.map(foodType => foodType.toLowerCase());
             // Controlla se almeno uno dei tipi di cibo selezionati è incluso in restaurantFoodTypes
             const matchFoodTypes = foodTypes.some(selectedFoodType => restaurantFoodTypes.includes(selectedFoodType));
             // Controlla se la distanza massima di consegna è minore o uguale a maxDistance
-            const withinDistance = restaurant.max_delivery_distance <= maxDistance || !maxDistance;
+            const withinDistance = restaurant.distance <= maxDistance || !maxDistance;
             return matchFoodTypes && withinDistance;
         });
 
@@ -61,8 +61,8 @@ export default function AllRestaurants()
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">{restaurant.name}</h5>
-                                <p className="card-text">Food Types: {restaurant.food_types.join(', ')}</p>
-                                <p className="card-text">Max Delivery Distance: {restaurant.max_delivery_distance}</p>
+                                <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
+                                <p className="card-text">Distance: {restaurant.distance}</p>
                             </div>
                         </div>
                     </div>
