@@ -23,8 +23,7 @@ function App()
         <Navbar /> 
         <Routes>
           {/* <Route index element={<Homepage />} /> */}
-          <Route index element={<Registration />} />
-          <Route path="login" element={<Login />} />
+          <Route index element={<Login />} /> 
           <Route path="registration" element={<Registration />} />
         </Routes>
       </BrowserRouter>
