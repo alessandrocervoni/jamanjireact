@@ -1,15 +1,14 @@
 import axios from "axios";
-import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { currentRestaurant } from "../../App";
+import { useParams } from "react-router-dom";
+// import { currentRestaurant } from "../../App";
 import MenuForm from "./MenuForm";
 
 export default function RestaurantDetail(props)
 {
     let {id} = useParams();
 
-    const [user, setUsers] = useState([]);
+    // const [user, setUsers] = useState([]);
     const [restaurant, setRestaurant] = useState();
 
     // useEffect(
@@ -31,9 +30,15 @@ export default function RestaurantDetail(props)
         });
     }, []);
 
-    function CardGrid() {
+    function CardGrid() 
+    {
+        if (!restaurant) 
+        {
+            return <div>Loading...</div>;
+        }
+    
         return (
-            <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>             
+            <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>
                 <div className="card">
                     <div className="card-body">
                         <h5 className="card-title">{restaurant.name}</h5>
