@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { atom } from "jotai";
+import { useAtom } from "jotai";
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from "./components/navbar/Navbar";
 // import Homepage from "./components/homepage/Homepage";
 import Registration from "./components/registration/Registration";
 import Login from "./components/login/Login";
-import { useAtom } from "jotai";
+import AllRestaurants from "./components/restaurant/AllRestaurants";
 
 // export const currentGuild = atom();
 export const currentUser = atom();
@@ -23,7 +24,8 @@ function App()
         <Navbar /> 
         <Routes>
           {/* <Route index element={<Homepage />} /> */}
-          <Route index element={<Login />} /> 
+          <Route index element={<AllRestaurants />} /> 
+          <Route path="login" element={<Login/>} />
           <Route path="registration" element={<Registration />} />
         </Routes>
       </BrowserRouter>
