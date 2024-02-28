@@ -57,7 +57,7 @@ export default function Registration()
             return;
         }
 
-        axios.post("/user/register", newUser)
+        axios.post("/userreg", newUser)
             .then((response) => {
                 setNew({
                     mail: "",

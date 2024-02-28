@@ -11,7 +11,7 @@ export default function RestaurantDetail(props)
     useEffect(
         ()=>
         {
-            axios.get("/restaurant/"+id).then(
+            axios.get("/restaurants/"+id).then(
                 (response) =>
                 {
                     setUsers(response.data);
