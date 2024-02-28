@@ -17,7 +17,6 @@ export const currentRestaurant = atom();
 
 function App() 
 { 
-//   const [guild, setGuild] = useAtom(currentGuild);
   const [user, setUser] = useAtom(currentUser);
   
 
@@ -28,7 +27,7 @@ function App()
         <Navbar /> 
         <Routes>
           {/* <Route index element={<Homepage />} /> */}
-          <Route index element={<AllRestaurants />} /> 
+          <Route index element={<Login />} /> 
           <Route path="allRestaurants" element={<AllRestaurants />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />

@@ -68,15 +68,6 @@ export default function Registration()
                 });
                 setUser(response.data);
                 navigate('/login');
-
-                // if (response.data) 
-                // {
-                // } 
-                // else 
-                // {
-                //     alert('Registrazione non riuscita, spiacente.');
-                // }
-
             })
             .catch((error) => {
                 console.error('Errore durante la registrazione:', error);

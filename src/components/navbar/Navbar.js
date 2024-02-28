@@ -8,9 +8,10 @@ const Navbar = () => {
 
     let navigate = useNavigate();
 
-    function logout() {
+    function logout() 
+    {
         setUser(null);
-        navigate("http://localhost:3000/")
+        navigate('/')
         // Effettua il logout e rimuovi eventuali informazioni di autenticazione salvate
     }
 
@@ -36,7 +37,7 @@ const UnauthenticatedNavbar = () => {
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item ms-5 p-3 fw-bold">
-                            <Link class="text-white nav-link" to="/">All Restaurants</Link>
+                            <Link class="nav-link disabled" to="/">All Restaurants</Link>
                         </li>
                     </ul>
                     <div class="d-flex">
@@ -60,7 +61,7 @@ const AuthenticatedNavbar = ({ user, logout }) => {
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item ms-5 p-3 fw-bold">
-                            <Link class="text-white nav-link" to="/">All Restaurants</Link>
+                            <Link class="text-white nav-link" to="/allRestaurants">All Restaurants</Link>
                         </li>
                     </ul>
                     <div class="d-flex">
@@ -68,7 +69,7 @@ const AuthenticatedNavbar = ({ user, logout }) => {
                             Ciao, {user.mail}
                         </div>
                         <div class="text-white me-5 fw-bold">
-                            <Link class="text-white nav-link" onClick={logout}>Logout</Link>
+                            <button class="text-white nav-link" onClick={logout}>Logout</button>
                         </div>
                     </div>
                 </div>

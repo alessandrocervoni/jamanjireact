@@ -32,7 +32,8 @@ export default function Login()
             }
 
             // Validazione della password per robustezza
-            if (!passwordRegex.test(requestBody.password)) {
+            if (!passwordRegex.test(requestBody.password)) 
+            {
                 alert('La password deve contenere almeno 8 caratteri, una lettera minuscola, una lettera maiuscola e un numero.');
                 return;
             }
