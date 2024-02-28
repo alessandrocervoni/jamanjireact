@@ -71,7 +71,7 @@ export default function AllRestaurants()
                                 <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
                                 <p className="card-text">Distance: {restaurant.distance}</p>
                                 {/* Aggiungi il pulsante per andare a RestaurantDetail.js */}
-                                <Link to="/restaurantDetail" className="btn btn-primary">Go to Restaurant Detail</Link>
+                                <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
                             </div>
                         </div>
                     </div>

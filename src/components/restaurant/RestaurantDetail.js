@@ -1,66 +1,79 @@
 import axios from "axios";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { currentRestaurant } from "../../App";
+import MenuForm from "./MenuForm";
 
 export default function RestaurantDetail(props)
 {
     let {id} = useParams();
 
     const [user, setUsers] = useState([]);
+    const [restaurant, setRestaurant] = useState();
 
-    useEffect(
-        ()=>
-        {
-            axios.get("/restaurants/"+id).then(
-                (response) =>
-                {
-                    setUsers(response.data);
-                }
-            );
-        },
-        []
-    )
+    // useEffect(
+    //     ()=>
+    //     {
+    //         axios.get("/restaurant/"+id).then(
+    //             (response) =>
+    //             {
+    //                 setUsers(response.data);
+    //             }
+    //         );
+    //     },
+    //     []
+    // )
 
-    function Card({name, phone, openingHour, closingHour, positionX, positionY, foodTypes, deliveryPricePerUnit, maxDeliveryDistance, imgUrl, menu, deliveries})
-    {
-        return(
-            <div className="col">
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">{name}</h5>
+    useEffect(() => {
+        axios.get("/restaurant/"+id).then((response) => {
+            setRestaurant(response.data);
+        });
+    }, []);
+
+    function CardGrid() {
+        return (
+            <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>
+               
+                   
+                        <div className="card">
+                            <div className="card-body">
+                            <h5 className="card-title">{restaurant.name}</h5>
                             <span className="input-group-text">Phone</span>
-                                <li className="list-group-item"> {phone} </li>
+                                <li className="list-group-item"> {restaurant.phone} </li>
                             <span className="input-group-text">Opening Hour</span>
-                                <li className="list-group-item"> {openingHour} </li>
+                                <li className="list-group-item"> {restaurant.openingHour} </li>
                             <span className="input-group-text">Closing Hour</span>
-                                <li className="list-group-item"> {closingHour} </li>
+                                <li className="list-group-item"> {restaurant.closingHour} </li>
                             <span className="input-group-text">Position X</span>
-                                <li className="list-group-item"> {positionX} </li>
+                                <li className="list-group-item"> {restaurant.positionX} </li>
                             <span className="input-group-text">Position Y</span>
-                                <li className="list-group-item"> {positionY} </li>
-                            <span className="input-group-text">Food Types</span>
-                                <li className="list-group-item"> {foodTypes} </li>
+                                <li className="list-group-item"> {restaurant.positionY} </li>
+                                <span className="input-group-text">Food Types</span>
+                                <li className="list-group-item"> {restaurant.foodTypes} </li>
                             <span className="input-group-text">Delivery Price Per Unit</span>
-                                <li className="list-group-item"> {deliveryPricePerUnit} </li>
+                                <li className="list-group-item"> {restaurant.deliveryPricePerUnit} </li>
                             <span className="input-group-text">Max Delivery Distance</span>
-                                <li className="list-group-item"> {maxDeliveryDistance} </li>
+                                <li className="list-group-item"> {restaurant.maxDeliveryDistance} </li>
                             <span className="input-group-text">Image</span>
-                                <li className="list-group-item"> {imgUrl} </li>
-                            <span className="input-group-text">Menu</span>
-                                <li className="list-group-item"> {menu} </li>
-                            <span className="input-group-text">Deliveries</span>
-                                <li className="list-group-item"> {deliveries} </li>   
+                                <li className="list-group-item"> {restaurant.imgUrl} </li>
+                            <MenuForm id={restaurant.id}/>
+                            {/* <span className="input-group-text">Deliveries</span>
+                                <li className="list-group-item"> {restaurant.deliveries} </li> */}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
                 
+          
         );
     }
+    
+
 
         return(
             <>            
                     <div className="card" >
-                        {Card(user)}
+                       < CardGrid />
                     </div>
 
             </>

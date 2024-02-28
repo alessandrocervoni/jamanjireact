@@ -13,6 +13,7 @@ import MenuForm from "./components/restaurant/MenuForm";
 
 // export const currentGuild = atom();
 export const currentUser = atom();
+export const currentRestaurant = atom();
 
 function App() 
 { 
@@ -31,7 +32,7 @@ function App()
           <Route path="allRestaurants" element={<AllRestaurants />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
-          <Route path="restaurantDetail" element={<RestaurantDetail />} />
+          <Route path="restaurantDetail/:id" element={<RestaurantDetail />} />
           <Route path="menuForm" element={<MenuForm />} />
         </Routes>
       </BrowserRouter>
