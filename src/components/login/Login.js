@@ -44,16 +44,18 @@ export default function Login()
                 {
                     setUser(response.data);
 
-                    navigate("/")
-                } 
+                    navigate("/allRestaurants")
+                }
                 else
                 {
                     alert('Email e/o Password non validi.');
                 }
-
             })
 
-
+            .catch((error) => {
+                console.error('Errore durante il Login:', error);
+                alert('Si è verificato un errore durante il Login. Riprova più tardi.');
+            });
         }
 
     return(

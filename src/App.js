@@ -28,6 +28,7 @@ function App()
         <Routes>
           {/* <Route index element={<Homepage />} /> */}
           <Route index element={<AllRestaurants />} /> 
+          <Route path="allRestaurants" element={<AllRestaurants />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
           <Route path="restaurantDetail" element={<RestaurantDetail />} />

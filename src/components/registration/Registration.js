@@ -67,10 +67,13 @@ export default function Registration()
                     positionY: ""
                 });
 
-                if (response.data) {
+                if (response.data) 
+                {
                     setUser(response.data);
                     navigate('/login');
-                } else {
+                } 
+                else 
+                {
                     alert('Registrazione non riuscita, spiacente.');
                 }
             })
