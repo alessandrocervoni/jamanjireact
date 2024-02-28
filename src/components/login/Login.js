@@ -36,7 +36,30 @@ export default function Login()
                 }
 
             })
+        
     }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        
+            if (!emailRegex.test(mail)) 
+            {
+                alert('Inserisci un indirizzo email valido.');
+                return;
+            }
+
+            // Validazione della password per robustezza
+            if (!passwordRegex.test(password)) {
+                alert('La password deve contenere almeno 8 caratteri, una lettera minuscola, una lettera maiuscola e un numero.');
+                return;
+            }
+
+            const requestBody = 
+            {
+                email: mail,
+                password: password
+            };
 
     return(
         <>
