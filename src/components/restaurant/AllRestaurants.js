@@ -119,7 +119,7 @@ export default function AllRestaurants()
                                             <p className="card-text">{restaurant.isOpen}</p>
                                             <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
                                             <p className="card-text">Distance: {calculateDistance(user, restaurant)}m</p>
-                                            <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
+                                            <Link to={"/restaurantDetail/"+restaurant.id+"/"+user.id} className="btn btn-primary">Go to Restaurant Detail</Link>
                                         </div>
                                     </div>
                                 </div>
