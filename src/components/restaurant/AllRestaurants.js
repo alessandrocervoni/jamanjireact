@@ -72,7 +72,7 @@ export default function AllRestaurants()
                             </select>
                         </div>
                         <div className="mb-3">
-                            <input type="number" ref={searchMaxDistance} className="form-control" placeholder="Select max distance (km)" disabled={isFiltered} />
+                            <input type="number" ref={searchMaxDistance} className="form-control" placeholder="Select max distance (m)" disabled={isFiltered} />
                         </div>
                         <div className="d-grid">
                             {isFiltered ? (
@@ -117,7 +117,7 @@ export default function AllRestaurants()
                                             <img src={restaurant.imgUrl} className="card-img-top" alt="UrlImg" />
                                             <p className="card-text">{restaurant.isOpen}</p>
                                             <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
-                                            <p className="card-text">Distance: {distance(user, restaurant)} km</p>
+                                            <p className="card-text">Distance: {distance(user, restaurant)}m</p>
                                             <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
                                         </div>
                                     </div>
