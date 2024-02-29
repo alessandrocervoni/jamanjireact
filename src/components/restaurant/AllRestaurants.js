@@ -16,6 +16,8 @@ export default function AllRestaurants()
         });
     }, []);
 
+    //DA RIFARE IL FILTRO
+
     function filter() {
         // Verifica se entrambi i campi sono stati compilati
         if (!searchFoodTypes.current.value || !searchDistance.current.value) {
@@ -41,37 +43,39 @@ export default function AllRestaurants()
 
     function FilterForm() {
         return (
-            <div className="card text-center mb-3" style={{ position: "sticky", top: "100px", width: "14rem", marginLeft: "2%", marginTop: "10%" }}>
-                <form className="row g-3">
-                    <div className="col-12">
-                        <label htmlFor="filter" className="form-label">Filter</label>
-                    </div>
-                    <div className="col-12">
-                        <input name="food_types" ref={searchFoodTypes} type="text" className="form-control" id="inputFoodTypes" placeholder="Food Types" />
-                    </div>
-                    <div className="col-12">
-                        <input name="max_delivery_distance" ref={searchDistance} type="number" className="form-control" id="inputDistance" placeholder="Distance" />
-                    </div>
-                    <div className="col-12">
-                        <button onClick={filter} type="button" className="btn btn-primary">Filter</button>
-                    </div>
-                </form>
+            <div className="card text-center mb-3" style={{ position: "sticky", top: "100px", width: "18rem", margin: "3% auto" }}>
+                <div className="card-body">
+                    <h5 className="card-title">Filter</h5>
+                    <form>
+                        <div className="mb-3">
+                            <input name="food_types" ref={searchFoodTypes} type="text" className="form-control" id="inputFoodTypes" placeholder="Enter Food Types" />
+                        </div>
+                        <div className="mb-3">
+                            <input name="max_delivery_distance" ref={searchDistance} type="number" className="form-control" id="inputDistance" placeholder="Enter Distance" />
+                        </div>
+                        <div className="d-grid">
+                            <button onClick={filter} type="button" className="btn btn-primary">Filter</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
 
     function CardGrid() {
         return (
-            <div className="row row-cols-2 g-4" style={{ marginTop: "0%" }}>
+            <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>
                 {filteredRestaurants.map((restaurant) => (
                     <div key={restaurant.id} className="col">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">{restaurant.name}</h5>
+                                <img src={restaurant.imgUrl} class="card-img-top" alt="UrlImg"></img>
+                                <p className="card-text">Open: {restaurant.isOpen}</p>
                                 <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
-                                <p className="card-text">Distance: {restaurant.distance}</p>
+                                <p className="card-text">Distance: {restaurant.distance}m</p>
                                 {/* Aggiungi il pulsante per andare a RestaurantDetail.js */}
-                                <Link to="/restaurantDetail" className="btn btn-primary">Go to Restaurant Detail</Link>
+                                <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
                             </div>
                         </div>
                     </div>

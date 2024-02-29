@@ -32,7 +32,8 @@ export default function Login()
             }
 
             // Validazione della password per robustezza
-            if (!passwordRegex.test(requestBody.password)) {
+            if (!passwordRegex.test(requestBody.password)) 
+            {
                 alert('La password deve contenere almeno 8 caratteri, una lettera minuscola, una lettera maiuscola e un numero.');
                 return;
             }
@@ -60,7 +61,7 @@ export default function Login()
 
     return(
         <>
-            <div className="container" style={{ minHeight: '100vh', backgroundImage: `url('https://media.gqitalia.it/photos/61a545673e18427efdde2ecc/16:9/w_2560%2Cc_limit/Je_Lifestyle.jpg')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
+            <div className="container" style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Login.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
                 <div className="row justify-content-center mb-4">
                 <div className="col-md-6 ">
                     <h2 className="text-center mb-4">Login</h2>

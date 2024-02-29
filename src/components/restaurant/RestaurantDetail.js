@@ -1,69 +1,92 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+// import { currentRestaurant } from "../../App";
+import MenuForm from "./MenuForm";
 
 export default function RestaurantDetail(props)
 {
     let {id} = useParams();
 
-    const [user, setUsers] = useState([]);
+    // const [user, setUsers] = useState([]);
+    const [restaurant, setRestaurant] = useState();
 
-    useEffect(
-        ()=>
-        {
-            axios.get("/restaurants/"+id).then(
-                (response) =>
-                {
-                    setUsers(response.data);
-                }
-            );
-        },
-        []
-    )
+    // useEffect(
+    //     ()=>
+    //     {
+    //         axios.get("/restaurant/"+id).then(
+    //             (response) =>
+    //             {
+    //                 setUsers(response.data);
+    //             }
+    //         );
+    //     },
+    //     []
+    // )
 
-    function Card({name, phone, openingHour, closingHour, positionX, positionY, foodTypes, deliveryPricePerUnit, maxDeliveryDistance, imgUrl, menu, deliveries})
+    useEffect(() => {
+        axios.get("/restaurant/"+id).then((response) => {
+            setRestaurant(response.data);
+        });
+    }, []);
+
+
+    function CardGrid() 
     {
-        return(
-            <div className="col">
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">{name}</h5>
-                            <span className="input-group-text">Phone</span>
-                                <li className="list-group-item"> {phone} </li>
-                            <span className="input-group-text">Opening Hour</span>
-                                <li className="list-group-item"> {openingHour} </li>
-                            <span className="input-group-text">Closing Hour</span>
-                                <li className="list-group-item"> {closingHour} </li>
-                            <span className="input-group-text">Position X</span>
-                                <li className="list-group-item"> {positionX} </li>
-                            <span className="input-group-text">Position Y</span>
-                                <li className="list-group-item"> {positionY} </li>
-                            <span className="input-group-text">Food Types</span>
-                                <li className="list-group-item"> {foodTypes} </li>
-                            <span className="input-group-text">Delivery Price Per Unit</span>
-                                <li className="list-group-item"> {deliveryPricePerUnit} </li>
-                            <span className="input-group-text">Max Delivery Distance</span>
-                                <li className="list-group-item"> {maxDeliveryDistance} </li>
-                            <span className="input-group-text">Image</span>
-                                <li className="list-group-item"> {imgUrl} </li>
-                            <span className="input-group-text">Menu</span>
-                                <li className="list-group-item"> {menu} </li>
-                            <span className="input-group-text">Deliveries</span>
-                                <li className="list-group-item"> {deliveries} </li>   
+        const [isAlertShown, setIsAlertShown] = useState(true);
+
+        if (!restaurant && isAlertShown) 
+        {
+            alert('Loading...');
+            setIsAlertShown(false); // Imposta isAlertShown a false dopo aver mostrato l'alert una volta
+            return null; // Restituisci null per evitare la resa del resto del componente
+        }
+
+        if (!restaurant) {
+            return null; // Se restaurant è ancora undefined, non renderizzare nulla
+        }
+    
+        return (
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <div className="card">
+                        <div className="card-body">
+                            <h5 className="card-title text-center">{restaurant.name}</h5>
+                            <ul className="list-group list-group-flush">
+                                <RenderListItem label="Image" value={restaurant.imgUrl} />
+                                <RenderListItem label="Phone" value={restaurant.phone} />
+                                <RenderListItem label="Opening Hour" value={restaurant.openingHour} />
+                                <RenderListItem label="Closing Hour" value={restaurant.closingHour} />
+                                <RenderListItem label="Position X" value={restaurant.positionX} />
+                                <RenderListItem label="Position Y" value={restaurant.positionY} />
+                                <RenderListItem label="Delivery Price Per Unit" value={restaurant.deliveryPricePerUnit} />
+                                <RenderListItem label="Max Delivery Distance" value={restaurant.maxDeliveryDistance} />
+                                <RenderListItem label="Food Types" value={restaurant.foodTypes.join(', ')} />
+                            </ul>
+                            <MenuForm id={restaurant.id} />
+                        </div>
                     </div>
                 </div>
             </div>
-                
         );
     }
-
-        return(
-            <>            
-                    <div className="card" >
-                        {Card(user)}
-                    </div>
-
+    
+    function RenderListItem({ label, value }) {
+        return (
+            <>
+                <span className="input-group-text">{label}</span>
+                <li className="list-group-item">{value}</li>
             </>
         );
+    }
     
+    return (
+        <div className="container-fluid">
+            <div className="row justify-content-center align-items-center vh-100">
+                <div className="col-md-8">
+                    <CardGrid />
+                </div>
+            </div>
+        </div>
+    );
 }

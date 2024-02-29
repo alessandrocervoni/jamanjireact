@@ -66,16 +66,8 @@ export default function Registration()
                     positionX: "",
                     positionY: ""
                 });
-
-                if (response.data) 
-                {
-                    setUser(response.data);
-                    navigate('/login');
-                } 
-                else 
-                {
-                    alert('Registrazione non riuscita, spiacente.');
-                }
+                setUser(response.data);
+                navigate('/login');
             })
             .catch((error) => {
                 console.error('Errore durante la registrazione:', error);
@@ -90,7 +82,7 @@ export default function Registration()
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{ minHeight: '100vh', backgroundImage: `url('///Users/alex/Downloads/Black%20and%20Yellow%20Modern%20Food%20Delivery%20Facebook%20Ad.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <h2 className="text-center mb-4">Registration</h2>
