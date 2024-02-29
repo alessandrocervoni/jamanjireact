@@ -6,63 +6,66 @@ import axios from "axios";
 
 export default function MenuForm(props)
 {
-    const [menu, SetMenu] = useState();
+    const [menu, setMenu] = useState({});
     const [dish, setDish] = useState();
+
     
-
-
-    const [tempMenu, setTempMenu] = useState({
-        dishes:"",
-    });
-
-    function synchronize(e)
-    {
-        setTempMenu({...tempMenu, [e.target.name]: e.target.value});
-    }
-
     useEffect(
     function ()
     {
-        axios.get(`/menu/${props.id}/dishescat`, tempMenu)
+        axios.get(`/menu/${props.id}/dishescat`)
         .then((response) => {
             
-          setTempMenu(response.data);
+          setMenu(response.data);
 
         })
     },
     []
     )
 
-    function clear()
-    {
-        setTempMenu({
-            dishes:"",
-        })
+    function readOnlyCard(d) {
+        return (
+            <div className="card text-center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                <div className="card-body text-center">
+                    <h5 className="card-title text-center"> Category: {d.category} <br /> Name: {d.name}</h5>
+                    {/* <button className="btn" onClick={() => handleClick(d.id)} style={{ color: "#562BA6" }}><strong>ADD</strong></button>
+                    <button className="btn" onClick={() => handleRemove(d.id)} style={{ color: "#562BA6" }}><strong>REMOVE</strong></button> */}
+                </div>
+            </div>
+        )
     }
+
 
     return (
         <>
         <div className="d-flex justify-content-center text-center" style={{ backgroundColor: '#180434', minHeight: '100vh' }}>
             <div class="card m-3" style={{ backgroundColor: "#E9E9FD", height: '60%' }}>
-                <div class="card-body">
-                    <h2>FILTRA MENU' PER PIATTI</h2>
-                    <div> 
-                        
-                    </div>
-                    {/* <div class="input-group mb-3 card-title">
-                        <span class="input-group-text" >Name</span>
-                        <input type="date" class="form-control" name="name" value={setTempMenu.name} onChange={synchronize} />
-                    </div>
-                    <div class="input-group mb-3 card-title">
-                        <span class="input-group-text" >Category</span>
-                        <input type="text" class="form-control" name="category" value={setTempMenu.category} onChange={synchronize} />
-                    </div> */}
-                    <div>
-                        <button className="btn" onClick={clear} style={{ color: "#562BA6" }}><strong>CANCEL</strong></button>
-                    </div>
+                <h2> AMERICAN </h2>
+                {menu.dishes && menu.dishes.filter(d => d.category == 'American').map(d => (
+                        <div key={d.id} className="col-4 p-2" >
+                            <div className="card text center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                {readOnlyCard(d)}
+                            </div>
+                        </div>
+                    ))}
+                <h2> JAPANESE </h2>
+                {menu.dishes && menu.dishes.filter(d => d.category == 'Japanese').map(d => (
+                        <div key={d.id} className="col-4 p-2" >
+                            <div className="card text center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                {readOnlyCard(d)}
+                            </div>
+                        </div>
+                    ))}
+                <h2> ITALIAN </h2>
+                {menu.dishes && menu.dishes.filter(d => d.category == 'Italian').map(d => (
+                        <div key={d.id} className="col-4 p-2" >
+                            <div className="card text center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                {readOnlyCard(d)}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </div>
 
     </>
     )

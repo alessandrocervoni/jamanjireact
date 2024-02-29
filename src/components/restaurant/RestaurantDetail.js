@@ -10,28 +10,18 @@ export default function RestaurantDetail(props)
     let {id} = useParams();
 
     const [user, setUsers] = useState([]);
-    const [restaurant, setRestaurant] = useState();
+    const [restaurant, setRestaurant] = useState({});
 
-    // useEffect(
-    //     ()=>
-    //     {
-    //         axios.get("/restaurant/"+id).then(
-    //             (response) =>
-    //             {
-    //                 setUsers(response.data);
-    //             }
-    //         );
-    //     },
-    //     []
-    // )
+   
 
     useEffect(() => {
         axios.get("/restaurant/"+id).then((response) => {
             setRestaurant(response.data);
+            
         });
     }, []);
 
-    function CardGrid() {
+    
         return (
             <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>
                
@@ -57,7 +47,7 @@ export default function RestaurantDetail(props)
                                 <li className="list-group-item"> {restaurant.maxDeliveryDistance} </li>
                             <span className="input-group-text">Image</span>
                                 <li className="list-group-item"> {restaurant.imgUrl} </li>
-                            <MenuForm id={restaurant.id}/>
+                            <MenuForm id={id}/>
                             {/* <span className="input-group-text">Deliveries</span>
                                 <li className="list-group-item"> {restaurant.deliveries} </li> */}
                             </div>
@@ -70,13 +60,5 @@ export default function RestaurantDetail(props)
     
 
 
-        return(
-            <>            
-                    <div className="card" >
-                       < CardGrid />
-                    </div>
-
-            </>
-        );
+        
     
-}
