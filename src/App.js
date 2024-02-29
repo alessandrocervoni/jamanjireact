@@ -31,7 +31,7 @@ function App()
           <Route path="allRestaurants" element={<AllRestaurants />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
-          <Route path="restaurantDetail/:id" element={<RestaurantDetail />} />
+          <Route path="restaurantDetail/:id/:uid" element={<RestaurantDetail />} />
           <Route path="menuForm" element={<MenuForm />} />
         </Routes>
       </BrowserRouter>
