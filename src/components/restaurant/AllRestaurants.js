@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { currentUser } from "../../App";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAtom } from "jotai";
 
 export default function AllRestaurants() 
 {
@@ -8,12 +10,14 @@ export default function AllRestaurants()
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [foodTypes, setFoodTypes] = useState([]);
     const [isFiltered, setIsFiltered] = useState(false);
+    const [user, setUser] = useAtom(currentUser);
 
     useEffect(() => {
         axios.get("/restaurants").then((response) => {
-            setRestaurants(response.data);
-            setFilteredRestaurants(response.data);
-            const types = response.data.map(restaurant => restaurant.foodTypes).flat();
+            const data = response.data;
+            setRestaurants(data);
+            setFilteredRestaurants(data);
+            const types = data.map(restaurant => restaurant.foodTypes).flat();
             setFoodTypes([...new Set(types)]);
         });
     }, []);
@@ -28,14 +32,12 @@ export default function AllRestaurants()
 
         let filtered = restaurants.filter((restaurant) => {
             let isFoodTypeMatch = true;
-            if (selectedFoodType !== "") 
-            {
+            if (selectedFoodType !== "") {
                 isFoodTypeMatch = restaurant.foodTypes.includes(selectedFoodType);
             }
 
             let isDistanceMatch = true;
-            if (!isNaN(maxDistance)) 
-            {
+            if (!isNaN(maxDistance)) {
                 isDistanceMatch = restaurant.distance <= maxDistance;
             }
 
@@ -52,11 +54,12 @@ export default function AllRestaurants()
         setIsFiltered(false);
     }
 
-    function FilterForm() {
+    function FilterForm() 
+    {
         const foodTypeOptions = foodTypes.map((foodType, index) => (
             <option key={index} value={foodType}>{foodType}</option>
         ));
-    
+
         return (
             <div className="card text-center mb-3" style={{ position: "sticky", top: "100px", width: "18rem", margin: "3% auto" }}>
                 <div className="card-body">
@@ -84,25 +87,46 @@ export default function AllRestaurants()
         );
     }
 
+    function distance(user, restaurant)
+    {
+        const x1 = user.positionX;
+        const y1 = user.positionY;
+        const x2 = restaurant.positionX;
+        const y2 = restaurant.positionY;
+
+        const base = x1 - x2;
+        const height = y1 - y2;
+        const distance = Math.sqrt(Math.pow(base, 2) + Math.pow(height, 2));
+
+        return Math.round(distance);
+    }
+
     function CardGrid() 
     {
         return (
-            <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>
-                {filteredRestaurants.map((restaurant) => (
-                    <div key={restaurant.id} className="col">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">{restaurant.name}</h5>
-                                <img src={restaurant.imgUrl} className="card-img-top" alt="UrlImg" />
-                                <p className="card-text">{restaurant.isOpen}</p>
-                                <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
-                                <p className="card-text">Distance: {restaurant.distance}km</p>
-                                <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
-                            </div>
-                        </div>
+            <>
+                {
+                    user && 
+                    <div className="row row-cols-md-3 g-4" style={{ marginTop: "0%" }}>
+                        {filteredRestaurants.map((restaurant) => {
+                            return (
+                                <div key={restaurant.id} className="col">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <h5 className="card-title">{restaurant.name}</h5>
+                                            <img src={restaurant.imgUrl} className="card-img-top" alt="UrlImg" />
+                                            <p className="card-text">{restaurant.isOpen}</p>
+                                            <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
+                                            <p className="card-text">Distance: {distance(user, restaurant)} km</p>
+                                            <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
-                ))}
-            </div>
+                }
+            </>
         );
     }
 
