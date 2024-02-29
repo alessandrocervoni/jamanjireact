@@ -29,23 +29,38 @@ export default function AllRestaurants()
     {
         const selectedFoodType = searchFoodTypes.current.value;
         const maxDistance = parseInt(searchMaxDistance.current.value);
-
+    
         let filtered = restaurants.filter((restaurant) => {
             let isFoodTypeMatch = true;
             if (selectedFoodType !== "") {
                 isFoodTypeMatch = restaurant.foodTypes.includes(selectedFoodType);
             }
-
+    
             let isDistanceMatch = true;
             if (!isNaN(maxDistance)) {
-                isDistanceMatch = restaurant.distance <= maxDistance;
+                const distance = calculateDistance(user, restaurant);
+                isDistanceMatch = distance <= maxDistance;
             }
-
+    
             return isFoodTypeMatch && isDistanceMatch;
         });
-
+    
         setFilteredRestaurants(filtered);
         setIsFiltered(true);
+    }
+    
+    function calculateDistance(user, restaurant) 
+    {
+        const x1 = user.positionX;
+        const y1 = user.positionY;
+        const x2 = restaurant.positionX;
+        const y2 = restaurant.positionY;
+    
+        const base = x1 - x2;
+        const height = y1 - y2;
+        const distance = Math.sqrt(Math.pow(base, 2) + Math.pow(height, 2));
+    
+        return Math.round(distance);
     }
 
     function resetFilter() 
@@ -87,20 +102,6 @@ export default function AllRestaurants()
         );
     }
 
-    function distance(user, restaurant)
-    {
-        const x1 = user.positionX;
-        const y1 = user.positionY;
-        const x2 = restaurant.positionX;
-        const y2 = restaurant.positionY;
-
-        const base = x1 - x2;
-        const height = y1 - y2;
-        const distance = Math.sqrt(Math.pow(base, 2) + Math.pow(height, 2));
-
-        return Math.round(distance);
-    }
-
     function CardGrid() 
     {
         return (
@@ -117,7 +118,7 @@ export default function AllRestaurants()
                                             <img src={restaurant.imgUrl} className="card-img-top" alt="UrlImg" />
                                             <p className="card-text">{restaurant.isOpen}</p>
                                             <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
-                                            <p className="card-text">Distance: {distance(user, restaurant)}m</p>
+                                            <p className="card-text">Distance: {calculateDistance(user, restaurant)}m</p>
                                             <Link to={"/restaurantDetail/"+restaurant.id} className="btn btn-primary">Go to Restaurant Detail</Link>
                                         </div>
                                     </div>
