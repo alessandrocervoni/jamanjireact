@@ -14,6 +14,7 @@ import MenuForm from "./components/restaurant/MenuForm";
 // export const currentGuild = atom();
 export const currentUser = atom();
 export const currentRestaurant = atom();
+export const currentDelivery = atom();
 
 function App() 
 { 
