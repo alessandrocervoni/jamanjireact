@@ -7,8 +7,8 @@ import axios from "axios";
 export default function MenuForm(props)
 {
     const [menu, setMenu] = useState({});
-    const [dishDelivery, setDishDelivery] = useState([]);
     const [delivery, setDelivery] = useAtom(currentDelivery);
+
     
     
     useEffect(
@@ -26,7 +26,20 @@ export default function MenuForm(props)
 
     function handleAdd(dishid) {
         axios.put("/dishes/adding/" + dishid + "/" + delivery.id)
-            
+        .then((response) => 
+        {
+            setDelivery(response.data);
+        })
+    }
+
+    function handleRemove(dishid)
+    {
+        axios.delete("/dishes/deleting/"+ dishid + "/" + delivery.id)
+        .then((response) => 
+        {
+            setDelivery(response.data);
+        })
+
     }
 
     function readOnlyCard(d) {
@@ -35,51 +48,85 @@ export default function MenuForm(props)
                 <div className="card-body text-center">
                     <h5 className="card-title text-center"> Category: {d.category} <br /> Name: {d.name}</h5>
                     <button className="btn" onClick={() => handleAdd(d.id)} style={{ color: "#562BA6" }}><strong>ADD TO CART</strong></button>
-                    {/* <button className="btn" onClick={() => handleRemove(d.id)} style={{ color: "#562BA6" }}><strong>REMOVE</strong></button> */}
+                    <button className="btn" onClick={() => handleRemove(d.id)} style={{ color: "#562BA6" }}><strong>REMOVE</strong></button>
                 </div>
             </div>
         )
     }
 
     return (
-        <div className="col-8 p-4">
-            <div className="row" style={{ backgroundColor: '#180434', minHeight: '100vh' }}>
-                <div class="card m-3" style={{ backgroundColor: "#E9E9FD", height: '60%' }}>
-                    <h2> AMERICAN </h2>
-                    {menu.dishes && menu.dishes.filter(d => d.category == 'American').map(d => (
-                        <div key={d.id} className="col-4 p-2" >
-                            <div className="card text center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
-                                {readOnlyCard(d)}
+        <>
+            <div className="col-8 p-4">
+                <div className="row">
+                    <div className="card m-3 text-center">
+                        {menu.dishes && menu.dishes.filter(d => d.category === 'American').length > 0 && (
+                            <div className="row">
+                                <h2> AMERICAN </h2>
+                                {menu.dishes.filter(d => d.category === 'American')
+                                    .map(d => (
+                                        <div key={d.id} className="col-4 p-2">
+                                            <div className="card text-center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                                {readOnlyCard(d)}
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
-                        </div>
-                    ))}
-                    <h2> JAPANESE </h2>
-                    {menu.dishes && menu.dishes.filter(d => d.category == 'Japanese').map(d => (
-                        <div key={d.id} className="col-4 p-2" >
-                            <div className="card text center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
-                                {readOnlyCard(d)}
+                        )}
+                        {menu.dishes && menu.dishes.filter(d => d.category === 'Japanese').length > 0 && (
+                            <div className="row">
+                                <h2> JAPANESE </h2>
+                                {menu.dishes.filter(d => d.category === 'Japanese')
+                                    .map(d => (
+                                        <div key={d.id} className="col-4 p-2">
+                                            <div className="card text-center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                                {readOnlyCard(d)}
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
-                        </div>
-                    ))}
-                    <h2> ITALIAN </h2>
-                    {menu.dishes && menu.dishes.filter(d => d.category == 'Italian').map(d => (
-                        <div key={d.id} className="col-4 p-2" >
-                            <div className="card text center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
-                                {readOnlyCard(d)}
+                        )}
+                        {menu.dishes && menu.dishes.filter(d => d.category === 'Italian').length > 0 && (
+                            <div className="row">
+                                <h2> ITALIAN </h2>
+                                {menu.dishes.filter(d => d.category === 'Italian')
+                                    .map(d => (
+                                        <div key={d.id} className="col-4 p-2">
+                                            <div className="card text-center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                                {readOnlyCard(d)}
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
-                        </div>
-                    ))}
+                        )}
+                    </div>
                 </div>
             </div>
-            <div className="menu-items">
-                {delivery && delivery.dishesDeliveries && delivery.dishesDeliveries.map(dish => (
-                    <div>
-                        <p>Prezzo del piatto: {dish.getPrice()}</p> 
-                        <p>Prezzo della consegna:  {delivery.getTotalPrice()}</p>
-                        <p>Prezzo totale: {delivery.getTotalPrice()}</p>
+            <div className="col-4 p-4">
+                <div className="card">
+                    <div className="card-body">
+                        <div className="menu-items">
+                            <label>CARRELLO</label>
+                            {delivery && delivery.dishesDeliveries && delivery.dishesDeliveries.map(dish => (
+                                <div key={dish.id}>
+                                    <p>Prezzo del piatto: {dish.price}</p>
+                                    <p>Quantità {dish.quantity} </p>
+                                </div>
+
+                            ))}
+                            
+                            {delivery &&
+                            <>
+                                    <p>Prezzo della consegna: {delivery.riderRevenue}</p>
+                                    <p>Prezzo totale: {delivery.totalPrice}</p>
+                                    <p>Distanza {delivery.distance}</p>
+                                    <p>Delivery Price Per Unit: {delivery.restaurant.deliveryPricePerUnit}</p>
+                            </>
+                            }
+                        </div>
                     </div>
-                ))}
+                </div>
             </div>
-        </div>
+        </>
     );
+    
 }
