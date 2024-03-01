@@ -124,6 +124,7 @@ export default function MenuForm(props)
                                     <p>Prezzo totale: {delivery.totalPrice}</p>
                                     <p>Distanza {delivery.distance}</p>
                                     <p>Delivery Price Per Unit: {delivery.restaurant.deliveryPricePerUnit}</p>
+                                    {/* VA RIVISTO IL DISABLED DEL PULSANTE SE IL RISTORANTE è CHIUSO */}
                                     <div className="mb-2">
                                             {restGlob && restGlob.isOpen ? (
                                                 <Link to={"/createDelivery"} className="btn btn-primary">Buy</Link>
