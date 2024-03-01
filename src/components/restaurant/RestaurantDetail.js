@@ -11,6 +11,7 @@ export default function RestaurantDetail(props)
 
     
     const [restaurant, setRestaurant] = useState({});
+    const [restGlob, setRestGlob] = useAtom(currentRestaurant);
     const [user, setUser] = useAtom(currentUser);
     const [delivery, setDelivery] = useAtom(currentDelivery);
 
@@ -18,6 +19,7 @@ export default function RestaurantDetail(props)
     useEffect(() => {
         axios.get("/restaurant/"+id).then((response) => {
             setRestaurant(response.data);
+            setRestGlob(response.data);
             
         });
     }, []);

@@ -9,6 +9,7 @@ export default function MenuForm(props)
 {
     const [menu, setMenu] = useState({});
     const [delivery, setDelivery] = useAtom(currentDelivery);
+    const [restGlob, setRestGlob] = useAtom(currentRestaurant);
 
     
     
@@ -124,7 +125,9 @@ export default function MenuForm(props)
                                     <p>Distanza {delivery.distance}</p>
                                     <p>Delivery Price Per Unit: {delivery.restaurant.deliveryPricePerUnit}</p>
                                     <div className="mb-2">
-                                        <Link to={"/createDelivery"} className="btn btn-primary">Buy</Link>
+                                            {restGlob && restGlob.isOpen ? (
+                                                <Link to={"/createDelivery"} className="btn btn-primary">Buy</Link>
+                                            ) : null}
                                     </div>
                             </>
                             }
