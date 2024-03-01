@@ -9,6 +9,9 @@ import { useAtom } from "jotai";
 import AllRestaurants from "./components/restaurant/AllRestaurants";
 import RestaurantDetail from "./components/restaurant/RestaurantDetail";
 import MenuForm from "./components/restaurant/MenuForm";
+import CreateDelivery from "./components/delivery/CreateDelivery";
+import confirmDelivery from "./components/delivery/ConfirmDelivery";
+
 
 
 // export const currentGuild = atom();
@@ -63,6 +66,8 @@ function App()
           <Route path="login" element={<Login />} />
           <Route path="restaurantDetail/:id/:uid" element={<RestaurantDetail />} />
           <Route path="menuForm" element={<MenuForm />} />
+          <Route path="createDelivery" element={<CreateDelivery />} />
+          {/* <Route path="confirmDelivery" element={<ConfirmDelivery />} /> */}
         </Routes>
       </BrowserRouter>
     </>

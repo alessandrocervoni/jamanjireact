@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { currentDelivery, currentRestaurant, currentUser } from "../../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 export default function MenuForm(props)
@@ -37,7 +38,9 @@ export default function MenuForm(props)
         axios.delete("/dishes/deleting/"+ dishid + "/" + delivery.id)
         .then((response) => 
         {
-            setDelivery(response.data);
+                let d = response.data;
+                d.dishesDeliveries = d.dishesDeliveries.filter(dt => dt.quantity != 0);
+                setDelivery(d);
         })
 
     }
@@ -120,6 +123,9 @@ export default function MenuForm(props)
                                     <p>Prezzo totale: {delivery.totalPrice}</p>
                                     <p>Distanza {delivery.distance}</p>
                                     <p>Delivery Price Per Unit: {delivery.restaurant.deliveryPricePerUnit}</p>
+                                    <div className="mb-2">
+                                        <Link to={"/createDelivery"} className="btn btn-primary">Buy</Link>
+                                    </div>
                             </>
                             }
                         </div>
