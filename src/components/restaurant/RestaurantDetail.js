@@ -23,6 +23,8 @@ export default function RestaurantDetail(props)
     }, []);
 
     useEffect(() => {
+
+        if(delivery==null || delivery.restaurant.id!=id)
         axios.get("/createDelivery/"+ uid +"/"+id).then((response) => {
             setDelivery(response.data);
 
@@ -32,22 +34,50 @@ export default function RestaurantDetail(props)
    
         return (
             <div>
-                <div className="restaurant-info" style={{ border: '2px solid #ccc', padding: '10px', textAlign: 'center', width: '300px', fontFamily: 'Arial, sans-serif' }}>
-                                {/* Contenuto del rettangolo */}
+                {/* <div className="restaurant-info" style={{ border: '2px solid #ccc', padding: '10px', textAlign: 'center', width: '300px', fontFamily: 'Arial, sans-serif' }}>
                                 <h5 className="card-title">{restaurant.name}</h5>
                                 <ul className="list-group">
+                                    <img src={restaurant.imgUrl} className="card-img-top" alt="UrlImg" />
                                     <li className="list-group-item">Phone: {restaurant.phone}</li> <li className="list-group-item">Opening Hour: {restaurant.openingHour}</li>
                                     <li className="list-group-item">Closing Hour: {restaurant.closingHour}</li> <li className="list-group-item">Position X: {restaurant.positionX}</li>
                                     <li className="list-group-item">Position Y: {restaurant.positionY}</li> <li className="list-group-item">Food Types: {restaurant.foodTypes}</li>
                                     <li className="list-group-item">Delivery Price Per Unit: {restaurant.deliveryPricePerUnit}</li>  <li className="list-group-item">Max Delivery Distance: {restaurant.maxDeliveryDistance}</li>
                                     <li className="list-group-item">Max Delivery Distance: {restaurant.maxDeliveryDistance}</li>
-                                    <li className="list-group-item">Image: {restaurant.imgUrl}</li>
                                 </ul>
-                </div>
-                    <div className="menu-form">
+                </div> */}
+
+
+                            <div style={{ display: "flex", justifyContent: "center" }}>
+                            <div
+                                className="restaurant-info"
+                                style={{
+                                border: "2px solid #ccc",
+                                padding: "10px",
+                                textAlign: "center",
+                                maxWidth: "500px", 
+                                width: "300%", 
+                                fontFamily: "Arial, sans-serif",
+                                marginBottom: "20px", 
+                                }}
+                            >
+                               
+                                    <h5 className="card-title">{restaurant.name}</h5>
+                                    <ul className="list-group">
+                                    <img src={restaurant.imgUrl} className="card-img-top" alt="UrlImg" />
+                                    <li className="list-group-item">Phone: {restaurant.phone} </li>
+                                    <li className="list-group-item">Opening Hour: {restaurant.openingHour} | Closing Hour: {restaurant.closingHour} </li>
+                                    {/* <li className="list-group-item">Closing Hour: {restaurant.closingHour}</li> */}
+                                    <li className="list-group-item">Position X: {restaurant.positionX} | Position Y: {restaurant.positionY}</li>
+                                    {/* <li className="list-group-item">Position Y: {restaurant.positionY}</li> */}
+                                    <li className="list-group-item">Food Types: {restaurant.foodTypes}</li>
+                                    <li className="list-group-item">Delivery Price Per Unit: {restaurant.deliveryPricePerUnit} | Max Delivery Distance: {restaurant.maxDeliveryDistance}</li>
+                                    {/* <li className="list-group-item">Max Delivery Distance: {restaurant.maxDeliveryDistance}</li> */}
+                                </ul>
+                            </div>
+                            </div>
+                        
                     <MenuForm id={id}/>
                      </div>
-            </div>
         );
     }
     

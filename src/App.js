@@ -12,9 +12,38 @@ import MenuForm from "./components/restaurant/MenuForm";
 
 
 // export const currentGuild = atom();
-export const currentUser = atom();
-export const currentRestaurant = atom();
-export const currentDelivery = atom();
+const currentUserStore = atom(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null);
+const currentRestaurantStore = atom(localStorage.getItem("restaurant") ? JSON.parse(localStorage.getItem("restaurant")) : null);
+const currentDeliveryStore = atom(localStorage.getItem("delivery") ? JSON.parse(localStorage.getItem("delivery")) : null);
+
+export const currentUser = atom(
+  (get) => get(currentUserStore),
+  (get,set,newCurrentUser)=>
+  {
+    set(currentUserStore,newCurrentUser);
+    localStorage.setItem("user",JSON.stringify(newCurrentUser));
+  }
+);
+
+export const currentRestaurant = atom(
+  (get) => get(currentRestaurantStore),
+  (get,set,newCurrentRestaurant)=>
+  {
+    set(currentRestaurantStore,newCurrentRestaurant);
+    localStorage.setItem("restaurant",JSON.stringify(newCurrentRestaurant));
+  }
+);
+
+export const currentDelivery = atom(
+  (get) => get(currentDeliveryStore),
+  (get,set,newCurrentDelivery)=>
+  {
+    set(currentDeliveryStore,newCurrentDelivery);
+    localStorage.setItem("delivery",JSON.stringify(newCurrentDelivery));
+  }
+);
+
+
 
 function App() 
 { 
