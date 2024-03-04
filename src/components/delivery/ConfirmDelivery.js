@@ -1,15 +1,17 @@
 import { useAtom } from "jotai";
-import { currentDelivery } from "../../App";
-import { useRef, useState } from "react";
+import { currentDelivery, currentRestaurant } from "../../App";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function ConfirmDelivery()
 {
     const [delivery, setDelivery] = useAtom(currentDelivery);
+    const [rest, setRest] = useAtom(currentRestaurant);
     const payMet = useRef(null);
     const [payment, setPayment] = useState("");
     const MetodiPag = ["Cash" , "Card" , "Paypal"];
+    const [riders, setRiders] = useState("");
 
     function saveDelivery()
     {
@@ -26,6 +28,7 @@ export default function ConfirmDelivery()
         axios.put("/delivery/buy/"+delivery.id,requestBody)
         alert("Ordine confermato");
     }
+
 
     function handleChange(event)
     {
