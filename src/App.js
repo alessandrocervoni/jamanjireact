@@ -11,6 +11,7 @@ import RestaurantDetail from "./components/restaurant/RestaurantDetail";
 import MenuForm from "./components/restaurant/MenuForm";
 import CreateDelivery from "./components/delivery/CreateDelivery";
 import ConfirmDelivery from "./components/delivery/ConfirmDelivery";
+import AcceptedDelivery from "./components/delivery/AcceptedDelivery";
 
 
 
@@ -68,6 +69,7 @@ function App()
           <Route path="menuForm" element={<MenuForm />} />
           <Route path="createDelivery" element={<CreateDelivery />} />
           <Route path="confirmDelivery" element={<ConfirmDelivery />} />
+          <Route path="acceptedDelivery" element={<AcceptedDelivery />} />
         </Routes>
       </BrowserRouter>
     </>

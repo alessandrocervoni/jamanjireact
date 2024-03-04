@@ -102,6 +102,19 @@ export default function MenuForm(props)
                                     ))}
                             </div>
                         )}
+                        {menu.dishes && menu.dishes.filter(d => d.category === 'Chinese').length > 0 && (
+                            <div className="row">
+                                <h2> CHINESE </h2>
+                                {menu.dishes.filter(d => d.category === 'Chinese')
+                                    .map(d => (
+                                        <div key={d.id} className="col-4 p-2">
+                                            <div className="card text-center" style={{ backgroundColor: "rgba(233, 233, 253, 0.5)" }}>
+                                                {readOnlyCard(d)}
+                                            </div>
+                                        </div>
+                                    ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -115,29 +128,26 @@ export default function MenuForm(props)
                                     <p>Prezzo del piatto: {dish.price}</p>
                                     <p>Quantità {dish.quantity} </p>
                                 </div>
-
                             ))}
-                            
-                            {delivery &&
-                            <>
+                            {delivery && (
+                                <>
                                     <p>Prezzo della consegna: {delivery.riderRevenue}</p>
                                     <p>Prezzo totale: {delivery.totalPrice}</p>
                                     <p>Distanza {delivery.distance}</p>
                                     <p>Delivery Price Per Unit: {delivery.restaurant.deliveryPricePerUnit}</p>
                                     <div className="mb-2">
-                                        {restGlob && restGlob.isOpen == "Aperto" ? (
+                                        {restGlob && restGlob.isOpen === "Aperto" ? (
                                             <Link to={"/createDelivery"} className="btn btn-primary">Buy</Link>
                                         ) : (
                                             <button className="btn btn-primary" disabled>Not Available</button>
                                         )}
                                     </div>
-                            </>
-                            }
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
         </>
     );
-    
-}
+}    

@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { currentDelivery } from "../../App";
 import { useAtom } from "jotai";
 import axios from "axios";
@@ -7,6 +7,10 @@ import axios from "axios";
 export default function CreateDelivery() {
     const [delivery, setDelivery] = useAtom(currentDelivery);
     const deliveryTimeRef = useRef(null);
+    const [notes, setNotes] = useState("");
+    const [deliveryStartTime, setDeliveryStartTime] = useState("");
+    let navigate = useNavigate();
+   
 
 
     function deliveryTime() {
@@ -81,11 +85,35 @@ export default function CreateDelivery() {
         }
     }, []);
 
-    function handleClick()
-    {
-        axios.put("/delivery/buy/"+delivery.id, delivery) //fare in modo che arrivi la delivery con note e arrival time aggiornate.
 
+    function handleChangeNotes(event) {
+        // Aggiorna lo stato locale delle note quando l'utente modifica il campo di testo
+        setNotes(event.target.value);
     }
+
+    function handleChangeDeliveryTime(event) 
+    {
+        // Aggiorna lo stato locale dell'orario di inizio consegna quando l'utente seleziona un nuovo orario
+        setDeliveryStartTime(event.target.value);
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        // Aggiorna la variabile globale delivery con l'orario di inizio consegna e le note inserite dall'utente
+        setDelivery({
+            ...delivery,
+            expected_arrival: deliveryStartTime,
+            notes: notes
+        });
+
+        
+        navigate('/confirmDelivery');
+
+        // Effettua qui altre azioni come l'invio dei dati al server, il reindirizzamento a una nuova pagina, ecc.
+    }
+
+    
 
     return (
         <div className="container">
@@ -94,19 +122,33 @@ export default function CreateDelivery() {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title text-center mb-4">Create Delivery</h5>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label htmlFor="deliveryTime" className="form-label">Starting delivery Time: {deliveryTime()}</label>
-                                    <select id="deliveryTime" className="form-select" ref={deliveryTimeRef}>
+                                    <label htmlFor="deliveryTime" className="form-label">Starting delivery Time:</label>
+                                    <select 
+                                        id="deliveryTime" 
+                                        className="form-select" 
+                                        ref={deliveryTimeRef}
+                                        value={deliveryStartTime} // Imposta il valore selezionato sullo stato locale
+                                        onChange={handleChangeDeliveryTime} // Gestisce l'evento onChange per aggiornare lo stato dell'orario di inizio consegna
+                                    >
                                         <option value="">Select delivery time</option>
+                                        {/* Inserisci qui le opzioni di tempo di consegna */}
                                     </select>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="notes" className="form-label">Notes:</label>
-                                    <textarea className="form-control" placeholder="Insert notes here" id="notes" rows="3"></textarea>
+                                    <textarea 
+                                        className="form-control" 
+                                        placeholder="Insert notes here" 
+                                        id="notes" 
+                                        rows="3" 
+                                        value={notes} // Imposta il valore del campo di testo sullo stato locale
+                                        onChange={(e) => setNotes(e.target.value)} // Gestisce l'evento onChange per aggiornare lo stato delle note
+                                    ></textarea>
                                 </div>
                                 <div className="d-grid">
-                                    <Link to={"/confirmDelivery"} className="btn btn-primary">Go to payment method</Link>
+                                <button to={"/confirmDelivery"} className="btn btn-primary" onClick={handleSubmit}>Go to payment method</button>
                                 </div>
                             </form>
                         </div>
@@ -116,3 +158,5 @@ export default function CreateDelivery() {
         </div>
     );
 }
+
+
