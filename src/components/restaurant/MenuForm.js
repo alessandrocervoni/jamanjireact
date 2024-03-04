@@ -125,7 +125,7 @@ export default function MenuForm(props)
                                     <p>Distanza {delivery.distance}</p>
                                     <p>Delivery Price Per Unit: {delivery.restaurant.deliveryPricePerUnit}</p>
                                     <div className="mb-2">
-                                        {restGlob && restGlob.isOpen ? (
+                                        {restGlob && restGlob.isOpen == "Aperto" ? (
                                             <Link to={"/createDelivery"} className="btn btn-primary">Buy</Link>
                                         ) : (
                                             <button className="btn btn-primary" disabled>Not Available</button>
