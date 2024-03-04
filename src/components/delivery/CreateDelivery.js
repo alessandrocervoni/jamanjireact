@@ -10,24 +10,24 @@ export default function CreateDelivery() {
     const [notes, setNotes] = useState("");
     const [deliveryStartTime, setDeliveryStartTime] = useState("");
     let navigate = useNavigate();
-   
+
 
 
     function deliveryTime() {
         let currentHour = new Date();
         let min = currentHour.getMinutes(); // Ottiene i minuti attuali
         let integerMinutes = parseInt(min); // Converte i minuti in un numero intero
-    
+
         integerMinutes = delivery.distance / 100 * 2;
-        
+
         // Calcola l'orario di consegna aggiungendo integerMinutes ai minuti attuali
         let deliveryTimestamp = currentHour.setMinutes(currentHour.getMinutes() + integerMinutes);
-    
+
         // Crea un nuovo oggetto Date utilizzando il timestamp
         let deliveryDate = new Date(deliveryTimestamp);
         let hours = deliveryDate.getHours();
         let minutes = deliveryDate.getMinutes();
-    
+
         // Formatta l'ora aggiungendo zero iniziali se necessario e restituisci una stringa
         return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
     }
@@ -37,12 +37,15 @@ export default function CreateDelivery() {
         let currentHour = new Date();
         let min = currentHour.getMinutes(); // Ottiene i minuti attuali
         let integerMinutes = parseInt(min); // Converte i minuti in un numero intero
-    
-        integerMinutes = delivery.distance / 100 * 2;
-        
+
+        // Aggiungi 15 minuti all'orario attuale
+        currentHour.setMinutes(currentHour.getMinutes() + 15);
+
+        integerMinutes = delivery.distance * 2;
+
         // Calcola l'orario di consegna aggiungendo integerMinutes ai minuti attuali
-        let deliveryTimestamp = currentHour.setMinutes(currentHour.getMinutes() + integerMinutes);
-    
+        let deliveryTimestamp = currentHour.getTime();
+
         // Crea un nuovo oggetto Date utilizzando il timestamp
         let deliveryDate = new Date(deliveryTimestamp);
         let hour = deliveryDate.getHours();
@@ -55,7 +58,7 @@ export default function CreateDelivery() {
         if (minutes >= 60) {
             minutes = 59;
         }
-        
+
         // Aggiunge le opzioni di tempo di consegna al menu a discesa fino a mezzanotte
         while (hour < 24) {
             // Aggiungi l'opzione al formato "hh:mm" al menu a discesa
@@ -71,6 +74,7 @@ export default function CreateDelivery() {
 
         return options;
     }
+
 
     // Quando il componente viene montato, aggiorna le opzioni del menu a tendina
     useEffect(() => {
@@ -91,8 +95,7 @@ export default function CreateDelivery() {
         setNotes(event.target.value);
     }
 
-    function handleChangeDeliveryTime(event) 
-    {
+    function handleChangeDeliveryTime(event) {
         // Aggiorna lo stato locale dell'orario di inizio consegna quando l'utente seleziona un nuovo orario
         setDeliveryStartTime(event.target.value);
     }
@@ -107,13 +110,13 @@ export default function CreateDelivery() {
             notes: notes
         });
 
-        
+
         navigate('/confirmDelivery');
 
         // Effettua qui altre azioni come l'invio dei dati al server, il reindirizzamento a una nuova pagina, ecc.
     }
 
-    
+
 
     return (
         <div className="container">
@@ -125,9 +128,9 @@ export default function CreateDelivery() {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="deliveryTime" className="form-label">Starting delivery Time:</label>
-                                    <select 
-                                        id="deliveryTime" 
-                                        className="form-select" 
+                                    <select
+                                        id="deliveryTime"
+                                        className="form-select"
                                         ref={deliveryTimeRef}
                                         value={deliveryStartTime} // Imposta il valore selezionato sullo stato locale
                                         onChange={handleChangeDeliveryTime} // Gestisce l'evento onChange per aggiornare lo stato dell'orario di inizio consegna
@@ -138,17 +141,17 @@ export default function CreateDelivery() {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="notes" className="form-label">Notes:</label>
-                                    <textarea 
-                                        className="form-control" 
-                                        placeholder="Insert notes here" 
-                                        id="notes" 
-                                        rows="3" 
+                                    <textarea
+                                        className="form-control"
+                                        placeholder="Insert notes here"
+                                        id="notes"
+                                        rows="3"
                                         value={notes} // Imposta il valore del campo di testo sullo stato locale
                                         onChange={(e) => setNotes(e.target.value)} // Gestisce l'evento onChange per aggiornare lo stato delle note
                                     ></textarea>
                                 </div>
                                 <div className="d-grid">
-                                <button to={"/confirmDelivery"} className="btn btn-primary" onClick={handleSubmit}>Go to payment method</button>
+                                    <button to={"/confirmDelivery"} className="btn btn-primary" onClick={handleSubmit}>Go to payment method</button>
                                 </div>
                             </form>
                         </div>
