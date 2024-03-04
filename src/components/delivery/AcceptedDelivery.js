@@ -57,7 +57,7 @@ export default function AcceptedDelivery()
                 <label htmlFor="payment" className="form-label">RIEPILOGO:</label>
                 <p>Il ristorante {restAcc.name} ti ringrazia per l'ordine!</p>
                 <p>Totale: {delivery.totalPrice} €</p>
-                {riders  && (
+                {rider  && (
                     <div>
                         <h3>Random Rider</h3>
                         <p>Name: {rider.name}</p>
