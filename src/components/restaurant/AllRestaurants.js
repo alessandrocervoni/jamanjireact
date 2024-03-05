@@ -111,7 +111,7 @@ export default function AllRestaurants() {
                                     <div className="card h-100">
                                         <div className="card-body">
                                             <h5 className="card-title">{restaurant.name}</h5>
-                                            <img src={restaurant.imgUrl} className="card-img-top" style={{ height: "200px", objectFit: "cover" }} alt="UrlImg" />
+                                            <img src={restaurant.imgUrl} className="card-img-top" style={{ height: "200px", objectFit: "cover",backgroundRepeat: 'no-repeat' }} alt="UrlImg" />
                                             <p className="card-text">{restaurant.isOpen}</p>
                                             <p className="card-text">Food Types: {restaurant.foodTypes.join(', ')}</p>
                                             <p className="card-text">Distance: {calculateDistance(user, restaurant)}m</p>

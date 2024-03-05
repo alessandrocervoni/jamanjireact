@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function AcceptedDelivery() {
     const [restAcc, setRestAcc] = useAtom(currentRestaurant);
@@ -57,22 +58,27 @@ export default function AcceptedDelivery() {
 
     return (
         <>
-        <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
-            <div className="mb-3">
-                <label htmlFor="payment" className="form-label">RIEPILOGO:</label>
-                <p>Il ristorante {restAcc.name} ti ringrazia per l'ordine!</p>
-                <p>Totale: {delivery.totalPrice} €</p>
-                {rider && (
-                    <div>
-                        <h3>Random Rider</h3>
-                        <p>Name: {rider.name}</p>
-                        {/* Aggiungi altri dettagli del rider qui... */}
+            <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`, backgroundSize: '100% 100%', backgroundPosition: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ background: 'rgba(255, 255, 255, 0.5)', padding: '20px', borderRadius: '10px', border: '2px solid black' }}>
+                    <div className="mb-3">
+                        <label htmlFor="payment" className="form-label" style={{ fontSize: '24px', fontWeight: 'bold' }}>RIEPILOGO:</label>
+                        <p>Il ristorante {restAcc.name} ti ringrazia per l'ordine!</p>
+                        <p>Totale: {delivery.totalPrice} €</p>
+                        {rider && (
+                            <div>
+                                <h3>Random Rider</h3>
+                                <p>Name: {rider.name}</p>
+                                {/* Aggiungi altri dettagli del rider qui... */}
+                            </div>
+                        )}
+                        <p>Orario confermato alle {delivery.expected_arrival}</p>
+                        <p>Note inserite: {delivery.notes}</p>
                     </div>
-                )}
-                <p>Orario confermato alle {delivery.expected_arrival}</p>
-                <p>Note inserite: {delivery.notes}</p>
-            </div>
+                </div>
             </div>
         </>
     );
+    
+    
+    
 }
