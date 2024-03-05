@@ -119,7 +119,7 @@ export default function CreateDelivery() {
 
 
     return (
-        <div className="container">
+        <div className="container" style={{ minHeight: '100vh', margin: 0, padding: 0, backgroundImage: `url('http://localhost:3000/Sfondo.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">

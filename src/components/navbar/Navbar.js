@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { currentUser } from "../../App";
 import { useAtom } from "jotai";
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 const Navbar = () => {
@@ -29,7 +30,7 @@ const Navbar = () => {
 
 const UnauthenticatedNavbar = () => {
     return (
-        <nav class="navbar navbar-expand-lg bg-light mb-4 sticky-top bg-dark bg-gradient">
+        <nav class="navbar navbar-expand-lg bg-light sticky-top bg-dark bg-gradient">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -53,7 +54,7 @@ const UnauthenticatedNavbar = () => {
 
 const AuthenticatedNavbar = ({ user, logout }) => {
     return (
-        <nav class="navbar navbar-expand-lg bg-light mb-4 sticky-top bg-dark bg-gradient">
+        <nav class="navbar navbar-expand-lg bg-light sticky-top bg-dark bg-gradient">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

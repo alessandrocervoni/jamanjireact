@@ -3,6 +3,7 @@ import { useRef  } from "react"
 import { atom, useAtom } from 'jotai';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 export default function Login()
@@ -61,34 +62,36 @@ export default function Login()
 
         return (
             <>
-                <div className="container" style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Jamanji.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-                    <div className="row justify-content-center mb-4">
-                        <div className="col-md-6">
-                            <form>
-                                <br>
-                                </br>
-                                <br>
-                                </br>
-                                <div className="form-group mb-3 text-light">
-                                    <label>Email:</label>
-                                    <input type="text" ref={emailIn} className="form-control" placeholder="Email" required />
-                                </div>
-                                <div className="form-group mb-4 text-light">
-                                    <label>Password:</label>
-                                    <input type="password" ref={pwIn} className="form-control" placeholder="Password" required />
-                                </div>
-                                <div className="d-grid gap-2 col-6 mx-auto mb-2">
-                                    <button className="btn btn-primary btn-block" type="button" onClick={handleLogin}>Login</button>
-                                </div>
-                                <div className="d-grid gap-2 col-6 mx-auto">
-                                    <Link className="btn btn-primary btn-block" to="/registration">Register here</Link>
-                                </div>
-                            </form>
+        <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div className="row justify-content-center">
+                <div className="col-6">
+                    <form>
+                        <br>
+                        </br>
+                        <br>
+                        </br>
+                        <br>
+                        </br>
+                        <div className="form-group mt-5 mb-3 text-dark">
+                            <label>Email:</label>
+                            <input type="text" ref={emailIn} className="form-control" placeholder="Email" required />
                         </div>
-                    </div>
+                        <div className="form-group mb-4 text-dark">
+                            <label>Password:</label>
+                            <input type="password" ref={pwIn} className="form-control" placeholder="Password" required />
+                        </div>
+                        <div className="d-grid gap-2 col-6 mx-auto mb-2">
+                            <button className="btn btn-dark btn-block" type="button" onClick={handleLogin}>Login</button>
+                        </div>
+                        <div className="d-grid gap-2 col-6 mx-auto">
+                            <Link className="btn btn-dark btn-block" to="/registration">Register here</Link>
+                        </div>
+                    </form>
                 </div>
-            </>
-    );
+            </div>
+        </div>
+    </>
+);
 }
             
 

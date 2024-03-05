@@ -26,7 +26,6 @@ export default function ConfirmDelivery()
             expected_arrival: ea
         }
         axios.put("/delivery/buy/"+delivery.id,requestBody)
-        alert("Ordine confermato");
     }
 
 
@@ -51,6 +50,7 @@ export default function ConfirmDelivery()
 
     return (
         <form onSubmit={handleSubmit}>
+            <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
             <div className="mb-3">
                 <label htmlFor="payment" className="form-label">Starting delivery Time:</label>
                 <select
@@ -67,6 +67,7 @@ export default function ConfirmDelivery()
                 </select>
             </div>
             <Link type="submit" className="btn btn-primary" to="/acceptedDelivery" onClick={saveDelivery}> Save Payment Method</Link>
+            </div>
         </form>
     );
 }

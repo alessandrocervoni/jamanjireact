@@ -57,6 +57,7 @@ export default function AcceptedDelivery() {
 
     return (
         <>
+        <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
             <div className="mb-3">
                 <label htmlFor="payment" className="form-label">RIEPILOGO:</label>
                 <p>Il ristorante {restAcc.name} ti ringrazia per l'ordine!</p>
@@ -70,7 +71,7 @@ export default function AcceptedDelivery() {
                 )}
                 <p>Orario confermato alle {delivery.expected_arrival}</p>
                 <p>Note inserite: {delivery.notes}</p>
-
+            </div>
             </div>
         </>
     );
