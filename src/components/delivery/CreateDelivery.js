@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { currentDelivery } from "../../App";
 import { useAtom } from "jotai";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 export default function CreateDelivery() {
     const [delivery, setDelivery] = useAtom(currentDelivery);
@@ -102,64 +104,70 @@ export default function CreateDelivery() {
 
     function handleSubmit(event) {
         event.preventDefault();
-
-        // Aggiorna la variabile globale delivery con l'orario di inizio consegna e le note inserite dall'utente
+    
+        // Verifica se l'utente ha selezionato un orario di inizio consegna
+        if (!deliveryStartTime) {
+            alert("Please select a delivery time.");
+            return;
+        }
+    
+        // Aggiorna la variabile globale `delivery` con l'orario di inizio consegna e le note inserite dall'utente
         setDelivery({
             ...delivery,
             expected_arrival: deliveryStartTime,
             notes: notes
         });
-
-
-        navigate('/confirmDelivery');
-
+    
         // Effettua qui altre azioni come l'invio dei dati al server, il reindirizzamento a una nuova pagina, ecc.
+        navigate('/confirmDelivery');
     }
 
 
 
+
     return (
-        <div className="container" style={{ minHeight: '100vh', margin: 0, padding: 0, backgroundImage: `url('http://localhost:3000/Sfondo.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title text-center mb-4">Create Delivery</h5>
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-3">
-                                    <label htmlFor="deliveryTime" className="form-label">Starting delivery Time:</label>
-                                    <select
-                                        id="deliveryTime"
-                                        className="form-select"
-                                        ref={deliveryTimeRef}
-                                        value={deliveryStartTime} // Imposta il valore selezionato sullo stato locale
-                                        onChange={handleChangeDeliveryTime} // Gestisce l'evento onChange per aggiornare lo stato dell'orario di inizio consegna
-                                    >
-                                        <option value="">Select delivery time</option>
-                                        {/* Inserisci qui le opzioni di tempo di consegna */}
-                                    </select>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="notes" className="form-label">Notes:</label>
-                                    <textarea
-                                        className="form-control"
-                                        placeholder="Insert notes here"
-                                        id="notes"
-                                        rows="3"
-                                        value={notes} // Imposta il valore del campo di testo sullo stato locale
-                                        onChange={(e) => setNotes(e.target.value)} // Gestisce l'evento onChange per aggiornare lo stato delle note
-                                    ></textarea>
-                                </div>
-                                <div className="d-grid">
-                                    <button to={"/confirmDelivery"} className="btn btn-primary" onClick={handleSubmit}>Go to payment method</button>
-                                </div>
-                            </form>
+        <>
+            <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                    <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title text-center mb-4">Create Delivery</h5>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="mb-3">
+                                        <label htmlFor="deliveryTime" className="form-label">Starting delivery Time:</label>
+                                        <select
+                                            id="deliveryTime"
+                                            className="form-select"
+                                            ref={deliveryTimeRef}
+                                            value={deliveryStartTime} // Imposta il valore selezionato sullo stato locale
+                                            onChange={handleChangeDeliveryTime} // Gestisce l'evento onChange per aggiornare lo stato dell'orario di inizio consegna
+                                        >
+                                            <option value="">Select delivery time</option>
+                                            {/* Inserisci qui le opzioni di tempo di consegna */}
+                                        </select>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="notes" className="form-label">Notes:</label>
+                                        <textarea
+                                            className="form-control"
+                                            placeholder="Insert notes here"
+                                            id="notes"
+                                            rows="3"
+                                            value={notes} // Imposta il valore del campo di testo sullo stato locale
+                                            onChange={(e) => setNotes(e.target.value)} // Gestisce l'evento onChange per aggiornare lo stato delle note
+                                        ></textarea>
+                                    </div>
+                                    <div className="d-grid">
+                                        <button to={"/confirmDelivery"} className="btn btn-dark" onClick={handleSubmit}>Go to payment method</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
-
-

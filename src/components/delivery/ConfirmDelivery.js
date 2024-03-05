@@ -2,7 +2,8 @@ import { useAtom } from "jotai";
 import { currentDelivery, currentRestaurant } from "../../App";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function ConfirmDelivery()
 {
@@ -12,6 +13,7 @@ export default function ConfirmDelivery()
     const [payment, setPayment] = useState("");
     const MetodiPag = ["Cash" , "Card" , "Paypal"];
     const [riders, setRiders] = useState("");
+    let navigate = useNavigate();
 
     function saveDelivery()
     {
@@ -34,40 +36,47 @@ export default function ConfirmDelivery()
         setPayment(event.target.value);
     }
 
-    function handleSubmit(event) 
-    {
+    function handleSubmit(event) {
         event.preventDefault();
-
-        // Aggiorna la variabile globale delivery con l'orario di inizio consegna e le note inserite dall'utente
+    
+        if (payment === "" || !payment) {
+          alert("Please select a payment method.");
+          return;
+        }
+    
         setDelivery({
-            ...delivery,
-            paymentMethod: payment,
+          ...delivery,
+          paymentMethod: payment,
         });
-
-        // Effettua qui altre azioni come l'invio dei dati al server, il reindirizzamento a una nuova pagina, ecc.
-    }
+    
+        saveDelivery();
+        navigate('/acceptedDelivery');
+      }
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
-            <div className="mb-3">
-                <label htmlFor="payment" className="form-label">Starting delivery Time:</label>
-                <select
-                    id="payment"
-                    className="form-select"
-                    ref={payMet}
-                    value={payment} // Imposta il valore selezionato sullo stato locale
-                    onChange={handleChange} // Gestisce l'evento onChange per aggiornare lo stato del metodo di pagamento
-                >
-                    <option value="">Select Payment Method</option>
-                    {MetodiPag.map((metodo, index) => (
-                        <option key={index} value={metodo}>{metodo}</option>
-                    ))}
-                </select>
-            </div>
-            <Link type="submit" className="btn btn-primary" to="/acceptedDelivery" onClick={saveDelivery}> Save Payment Method</Link>
-            </div>
-        </form>
+        <>
+            <form onSubmit={handleSubmit}>
+                <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`, backgroundSize: '100% 100%', backgroundPosition: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.5)', padding: '20px', borderRadius: '10px', textAlign: 'center' }}>
+                        <div className="mb-3">
+                            <select
+                                id="payment"
+                                className="form-select"
+                                ref={payMet}
+                                value={payment} // Imposta il valore selezionato sullo stato locale
+                                onChange={handleChange} // Gestisce l'evento onChange per aggiornare lo stato del metodo di pagamento
+                            >
+                                <option value="">Select Payment Method</option>
+                                {MetodiPag.map((metodo, index) => (
+                                    <option key={index} value={metodo}>{metodo}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <button type="submit" className="btn btn-dark" to="/acceptedDelivery" onClick={saveDelivery}> Save Payment Method</button>
+                    </div>
+                </div>
+            </form>
+        </>
     );
 }
