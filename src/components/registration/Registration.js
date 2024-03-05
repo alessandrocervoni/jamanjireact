@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function Registration() 
 {
@@ -57,6 +57,8 @@ export default function Registration()
             return;
         }
 
+        
+
         axios.post("/user/register", newUser)
             .then((response) => {
                 setNew({
@@ -67,6 +69,7 @@ export default function Registration()
                     positionY: ""
                 });
                 setUser(response.data);
+                alert("Utente inserito con successo, può procedere al login!")
                 navigate('/login');
             })
             .catch((error) => {
@@ -82,9 +85,15 @@ export default function Registration()
     }
 
     return (
-        <div className="container" style={{ minHeight: '100vh', backgroundImage: `url('///Users/alex/Downloads/Black%20and%20Yellow%20Modern%20Food%20Delivery%20Facebook%20Ad.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
+        <div style={{ minHeight: '100vh', backgroundImage: `url('http://localhost:3000/Sfondo.png')`,  backgroundSize: '100% 100%', backgroundPosition: 'center' }}>
             <div className="row justify-content-center">
-                <div className="col-md-6">
+                <div className="col-6">
+                    <br>
+                    </br>
+                    <br>
+                    </br>
+                    <br>
+                    </br>
                     <h2 className="text-center mb-4">Registration</h2>
                     <form>
                         <div className="form-group mb-3">
@@ -105,7 +114,7 @@ export default function Registration()
 
                         {/* BUTTON REGISTRAZIONE */}
                         <div className="d-grid gap-2 col-3 mx-auto">
-                            <button className="btn btn-primary" type="button" onClick={UploadUser}>Register</button>
+                            <button className="btn btn-dark" type="button" onClick={UploadUser}>Register</button>
                         </div>
 
                     </form>
